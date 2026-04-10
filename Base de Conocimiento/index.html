@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Base de Conocimientos - Terrivox</title>
+    <!-- Modern Typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Color Palette */
+            --bg-dark: #0f172a;
+            --bg-card: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --accent-primary: #38bdf8;
+            --accent-secondary: #818cf8;
+            --gradient-text: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --blur: blur(12px);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* Background Effects */
+        .bg-glow {
+            position: absolute;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(56, 189, 248, 0.15) 0%, rgba(15, 23, 42, 0) 70%);
+            top: -200px;
+            left: -200px;
+            border-radius: 50%;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        .bg-glow.right {
+            top: 40%;
+            right: -200px;
+            left: auto;
+            background: radial-gradient(circle, rgba(129, 140, 248, 0.1) 0%, rgba(15, 23, 42, 0) 70%);
+        }
+
+        /* Container */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        /* Typography */
+        h1, h2, h3, h4 {
+            font-family: 'Outfit', sans-serif;
+        }
+
+        .hero {
+            text-align: center;
+            margin-bottom: 5rem;
+            animation: fadeInDown 1s ease-out;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: var(--gradient-text);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--text-muted);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 6rem;
+            animation: fadeIn 1.2s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .section-number {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--accent-primary);
+            background: rgba(56, 189, 248, 0.1);
+            width: 48px;
+            height: 48px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            margin-right: 1.5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 600;
+        }
+
+        /* Glass Cards */
+        .glass-card {
+            background: var(--bg-card);
+            backdrop-filter: var(--blur);
+            -webkit-backdrop-filter: var(--blur);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .glass-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+            border-color: rgba(255, 255, 255, 0.2);
+        }
+
+        /* Grid Layouts */
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        /* Feature List (Funcionalidades) */
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+        }
+        .feature-icon {
+            color: var(--accent-secondary);
+            font-size: 1.5rem;
+            margin-right: 1rem;
+            margin-top: 0.2rem;
+        }
+
+        .feature-content h4 {
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: #fff;
+        }
+
+        .feature-content p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        /* Timeline (Planificación) */
+        .timeline {
+            position: relative;
+            padding-left: 2rem;
+            border-left: 2px solid rgba(56, 189, 248, 0.3);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2.45rem;
+            top: 0.25rem;
+            width: 16px;
+            height: 16px;
+            background: var(--bg-dark);
+            border: 3px solid var(--accent-primary);
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover::before {
+            background: var(--accent-primary);
+            box-shadow: 0 0 15px rgba(56, 189, 248, 0.8);
+        }
+
+        .timeline-week {
+            font-family: 'Outfit', sans-serif;
+            font-weight: 600;
+            color: var(--accent-secondary);
+            margin-bottom: 0.5rem;
+            display: block;
+        }
+
+        .timeline-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .timeline-list {
+            list-style: none;
+            color: var(--text-muted);
+        }
+
+        .timeline-list li {
+            position: relative;
+            padding-left: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .timeline-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--accent-primary);
+        }
+
+        /* Badge/Tag */
+        .badge {
+            background: rgba(129, 140, 248, 0.2);
+            color: var(--accent-secondary);
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-top: 1rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Delay for sections */
+        section:nth-child(2) { animation-delay: 0.2s; }
+        section:nth-child(3) { animation-delay: 0.4s; }
+        section:nth-child(4) { animation-delay: 0.6s; }
+        section:nth-child(5) { animation-delay: 0.8s; }
+        section:nth-child(6) { animation-delay: 1.0s; }
+
+        /* Highlight Text */
+        .highlight {
+            color: var(--accent-primary);
+            font-weight: 500;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 3rem;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-muted);
+            margin-top: 4rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="bg-glow"></div>
+    <div class="bg-glow right"></div>
+
+    <div class="container">
+        <!-- Hero -->
+        <div class="hero">
+            <span class="badge" style="margin-bottom: 1rem;">Fase 1 Demo</span>
+            <h1>Terrivox ERP</h1>
+            <p>Base de Conocimientos interactiva. Definición de producto, alcances, y proyecciones para la mitigación operativa en planes de manejo.</p>
+        </div>
+
+        <!-- Sección 1: Visión y Alcance -->
+        <section>
+            <div class="section-header">
+                <div class="section-number">1</div>
+                <h2 class="section-title">Visión y Alcance</h2>
+            </div>
+            <div class="glass-card">
+                <p style="font-size: 1.1rem; margin-bottom: 1.5rem;">
+                    <strong>Objetivo Principal (Fase 1):</strong> Proveer una demo funcional a empresas orientada a mitigar el <span class="highlight">"Desfase en la ejecución de las medidas de acuerdo a la frecuencia en los planes de manejo"</span>.
+                </p>
+                <div style="background: rgba(0,0,0,0.2); padding: 1.5rem; border-radius: 12px; border-left: 4px solid var(--accent-secondary); margin-bottom: 1.5rem;">
+                    <em>Nota: Un "Plan de Manejo" se define como el cronograma de actividades a realizar anualmente.</em>
+                </div>
+                <h3 style="font-size: 1.3rem; margin-bottom: 0.5rem; color: #fff;">Concepto Arquitectónico Central</h3>
+                <p color="var(--text-muted)">
+                    Terrivox se concibe, construye y diseña desde su génesis como un <strong>ERP moldeable</strong>. Esto garantiza que la plataforma no sea solo una herramienta de un solo propósito, sino una suite escalable capaz de adaptarse a cualquier entorno o industria en el futuro.
+                </p>
+            </div>
+        </section>
+
+        <!-- Sección 2: Funcionalidades Principales -->
+        <section>
+            <div class="section-header">
+                <div class="section-number">2</div>
+                <h2 class="section-title">Funcionalidades Principales</h2>
+            </div>
+            <div class="grid-2">
+                
+                <div class="glass-card">
+                    <div class="feature-item">
+                        <div class="feature-icon">📁</div>
+                        <div class="feature-content">
+                            <h4>Subida de Información</h4>
+                            <p>Interface intuitiva para que el usuario pueda cargar archivos Excel, procesando automáticamente el formato proporcionado por el cliente.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="feature-item">
+                        <div class="feature-icon">📊</div>
+                        <div class="feature-content">
+                            <h4>Indicadores Automáticos</h4>
+                            <p>Generación en tiempo real de gráficas, métricas y KPIs basándose en el análisis de los datos extraídos de la plantilla de Excel.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="feature-item">
+                        <div class="feature-icon">📅</div>
+                        <div class="feature-content">
+                            <h4>Agenda Recordatoria</h4>
+                            <p>Cronograma central dinámico donde el usuario puede visualizar de forma gráfica la calendarización anual y el estado de sus actividades.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="feature-item">
+                        <div class="feature-icon">🔔</div>
+                        <div class="feature-content">
+                            <h4>Notificaciones Omnicanal</h4>
+                            <p>Integración con <strong>WhatsApp</strong> y <strong>Correo Electrónico</strong> para disparar recordatorios automáticos y logs de ejecución a los responsables.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="feature-item">
+                        <div class="feature-icon">🎛️</div>
+                        <div class="feature-content">
+                            <h4>Dashboards (Admin/Usuario)</h4>
+                            <p>Vista gerencial para supervisar todos los planes globales, y vista de usuario focalizada en sus propias métricas y tareas asignadas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="glass-card">
+                    <div class="feature-item">
+                        <div class="feature-icon">📱</div>
+                        <div class="feature-content">
+                            <h4>Estructura PWA</h4>
+                            <p>Diseño Web Progresivo que actúa como una App Nativa en dispositivos móviles, con tiempos de carga rápidos y acceso desde el inicio.</p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Sección 3: Planificación -->
+        <section>
+            <div class="section-header">
+                <div class="section-number">3</div>
+                <h2 class="section-title">Planificación y Desarrollo</h2>
+            </div>
+            <p style="color: var(--text-muted); margin-bottom: 2rem;">
+                Adoptando el modelo de desarrollo automatizado/asistido por IA (Agentes), los tiempos y recursos se optimizan dramáticamente.
+                <span class="badge" style="margin-left: 1rem;">Tiempo Estimado: 4 Semanas</span>
+            </p>
+            
+            <div class="glass-card">
+                <div class="timeline">
+                    
+                    <div class="timeline-item">
+                        <span class="timeline-week">Semana 1</span>
+                        <h3 class="timeline-title">Análisis, Estructura PWA y Base de Datos</h3>
+                        <ul class="timeline-list">
+                            <li>Setup del entorno y diseño del modelo de datos ERP adaptativo.</li>
+                            <li>Creación del módulo de Autenticación y Perfiles (Administrador vs Usuario).</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-week">Semana 2</span>
+                        <h3 class="timeline-title">Carga de Datos y Procesamiento</h3>
+                        <ul class="timeline-list">
+                            <li>Programación del panel de ingesta y parseo del archivo Excel.</li>
+                            <li>Modelado en base de datos de los Cronogramas Anuales.</li>
+                            <li>Estructuración de la vista interactiva para la Agenda Recordatoria.</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-week">Semana 3</span>
+                        <h3 class="timeline-title">Dashboards y Generación de Indicadores</h3>
+                        <ul class="timeline-list">
+                            <li>Análisis de datos procesados e integración de motores de gráficos.</li>
+                            <li>Despliegue final de las vistas Dashboard Administrador y Dashboard Usuario.</li>
+                        </ul>
+                    </div>
+
+                    <div class="timeline-item" style="margin-bottom: 0;">
+                        <span class="timeline-week">Semana 4</span>
+                        <h3 class="timeline-title">Integraciones (Cloud) y Deployment</h3>
+                        <ul class="timeline-list">
+                            <li>Conexión con APIs de mensajería (Twilio/Meta para WhatsApp, SendGrid/Resend para Email).</li>
+                            <li>Motores de cron-jobs (tareas programadas en segundo plano) para recordatorios automáticos.</li>
+                            <li>Auditoría QA (Quality Assurance), refinamientos visuales responsivos y entrega de la Demo.</li>
+                        </ul>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección 4 y 5 -->
+        <div class="grid-2">
+            <!-- Sección Costes -->
+            <section>
+                <div class="section-header">
+                    <div class="section-number">4</div>
+                    <h2 class="section-title">Costes Operativos</h2>
+                </div>
+                <div class="glass-card" style="height: 100%;">
+                    <p style="color:var(--text-muted); font-size: 0.9rem; margin-bottom: 1.5rem;">
+                        Estimación de gastos fijos mensuales para sostener la infraestructura en Fase 1. Los costes de desarrollo se reducen drásticamente mediante Agentes-IA.
+                    </p>
+                    <ul class="timeline-list">
+                        <li><strong>Alojamiento (Hosting & DB):</strong> $0 - $25/mes (Vercel/Supabase, escalable).</li>
+                        <li><strong>Correos Electrónicos:</strong> ~$0 - $15/mes dependiente del volumen.</li>
+                        <li><strong>API de WhatsApp:</strong> ~$15 - $25/mes cuota plana + ~$0.015 por mensaje.</li>
+                        <li><strong>Licencias y Framekworks:</strong> $0 (Ecosistema Open Source: React, Node, etc).</li>
+                    </ul>
+                </div>
+            </section>
+
+            <!-- Sección Proyección -->
+            <section>
+                <div class="section-header">
+                    <div class="section-number">5</div>
+                    <h2 class="section-title">Proyección (ROI)</h2>
+                </div>
+                <div class="glass-card" style="height: 100%; border-color: rgba(129, 140, 248, 0.4);">
+                    <div style="margin-bottom: 1.5rem;">
+                        <span style="color: var(--accent-primary); font-weight: 600; display: block; margin-bottom: 0.5rem;">Para la empresa Cliente:</span>
+                        <p style="color:var(--text-muted); font-size: 0.95rem;">
+                            La mitigación del "Desfase" evita penalidades gubernamentales y de auditorías. Garantiza el cumplimiento de actividades anuales al 100%, dando tranquilidad operativa a la gerencia.
+                        </p>
+                    </div>
+                    <div>
+                        <span style="color: var(--accent-secondary); font-weight: 600; display: block; margin-bottom: 0.5rem;">Para Terrivox (SaaS / ERP):</span>
+                        <p style="color:var(--text-muted); font-size: 0.95rem;">
+                            Costo marginal de réplica mínimo (~$0). Gracias a su núcleo de ERP moldeable, se abre la puerta a realizar ventas cruzadas (up-sells) de módulos adicionales (Finanzas, Inventario, RRHH) sobre el mismo ecosistema.
+                        </p>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <footer>
+            <p>Terrivox &copy; 2026. Documentación generada para presentación Fase 1.</p>
+        </footer>
+    </div>
+</body>
+</html>
